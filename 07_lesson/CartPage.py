@@ -1,0 +1,27 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+
+
+class CartPage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
+
+    def get_cart_items(self):
+        items = []
+        cart_item_elements = self.driver.find_elements(
+            By.CLASS_NAME, 'cart_item_label')
+        for item in cart_item_elements:
+            name = item.find_element(By.CLASS_NAME, 'inventory_item_name').text
+            price = item.find_element(
+                By.CLASS_NAME, 'inventory_item_price').text
+            items.append({'name': name, 'price': price})
+
+        return items
+
+    def should_have_items(self, expected):
+        actual = self.get_cart_items()
+        assert actual == expected, f"Ожидалось: {expected}, но получено: {actual}"
+
+    def checkout(self):
+        self.driver.find_element(By.ID, "checkout").click()
