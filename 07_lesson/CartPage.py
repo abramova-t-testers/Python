@@ -21,7 +21,7 @@ class CartPage:
 
     def should_have_items(self, expected):
         actual = self.get_cart_items()
-        assert actual == expected, f"Ожидалось: {expected}, но получено: {actual}"
+        return actual == expected
 
     def checkout(self):
         self.driver.find_element(By.ID, "checkout").click()

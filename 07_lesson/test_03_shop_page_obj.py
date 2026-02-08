@@ -32,6 +32,7 @@ def test_shop_page(driver):
         {'name': 'Sauce Labs Onesie', 'price': '$7.99'}
     ]
     cart_page.should_have_items(expected_items)
+    assert cart_page.should_have_items(expected_items), f"Товары в корзине не соответствуют ожидаемым: {expected_items}"
     cart_page.checkout()
 
     order_page = OrderPage(driver)
